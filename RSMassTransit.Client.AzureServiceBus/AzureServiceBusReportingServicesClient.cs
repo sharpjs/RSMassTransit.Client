@@ -41,8 +41,6 @@ namespace RSMassTransit.Client.AzureServiceBus
         public AzureServiceBusReportingServicesClient(ReportingBusConfiguration configuration)
             : base(configuration) { }
 
-        //public static bool TryCreate()
-
         /// <inheritdoc/>
         protected override IBusControl CreateBus(out Uri queueUri)
         {
