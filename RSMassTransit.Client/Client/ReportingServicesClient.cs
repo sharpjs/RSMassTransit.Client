@@ -15,10 +15,15 @@
 */
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using MassTransit;
 using RSMassTransit.Messages;
+using static System.Reflection.BindingFlags;
+using static System.StringComparison;
 
 namespace RSMassTransit.Client
 {
@@ -85,6 +90,82 @@ namespace RSMassTransit.Client
                     timeout ?? Configuration.RequestTimeout
                 )
                 .Request(request, cancellationToken);
+
+        /// <summary>
+        ///   Creates a new <see cref="ReportingServicesClient"/> instance with
+        ///   the specified configuration.
+        /// </summary>
+        /// <param name="configuration">
+        ///   The configuration for the client, specifying how to communicate
+        ///   with RSMassTransit.
+        /// </param>
+        public static ReportingServicesClient Create(ReportingBusConfiguration configuration)
+        {
+            if (configuration == null)
+                throw new ArgumentNullException(nameof(configuration));
+
+            var supportedSchemes = DiscoverSupportedSchemes();
+            var requestedScheme  = configuration.BusUri?.Scheme;
+
+            if (!supportedSchemes.TryGetValue(requestedScheme, out Type type))
+                throw OnUnsupportedScheme(requestedScheme, supportedSchemes.Keys);
+
+            return (ReportingServicesClient) Activator.CreateInstance(type, configuration);
+        }
+
+        private static SortedDictionary<string, Type> DiscoverSupportedSchemes()
+        {
+            var schemes = new SortedDictionary<string, Type>(StringComparer.Ordinal);
+
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                // Assembly must be from RSMassTransit.Client family
+                if (!assembly.GetName().Name.StartsWith("RSMassTransit.Client.", Ordinal))
+                    continue;
+
+                foreach (var type in assembly.GetExportedTypes())
+                {
+                    // Type must be a concrete client class
+                    if (!typeof(ReportingServicesClient).IsAssignableFrom(type) || type.IsAbstract)
+                        continue;
+
+                    // Type must declare a URI scheme
+                    var schemeField = type.GetField("UriScheme", Public | Static);
+                    if (schemeField.FieldType != typeof(string))
+                        continue;
+
+                    // URI scheme must be non-null
+                    var scheme = schemeField.GetValue(obj: null) as string;
+                    if (scheme != null)
+                        schemes.Add(scheme, type);
+                }
+            }
+
+            return schemes;
+        }
+
+        private static Exception OnUnsupportedScheme(
+            string              requestedScheme,
+            IEnumerable<string> supportedSchemes)
+        {
+            var message = new StringBuilder();
+
+            message.AppendFormat(
+                "The URI scheme '{0}' is not supported by any loaded RSMassTransit client type.  ",
+                requestedScheme
+            );
+
+            if (supportedSchemes.Any())
+                message.Append("Supported schemes are: ")
+                    .AppendDelimitedList(supportedSchemes);
+            else
+                message.Append(
+                    "No RSMassTransit client types are loaded.  " +
+                    "Did you forget to install a client package?"
+                );
+
+            return new ArgumentException(message.ToString(), "configuration");
+        }
 
         /// <summary>
         ///   Stops the bus instance used by the client and releases any
