@@ -24,4 +24,8 @@
     <RootNamespace>RSMassTransit</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MassTransit" Version="4.0.1" />
+  </ItemGroup>
+
 </Project>
