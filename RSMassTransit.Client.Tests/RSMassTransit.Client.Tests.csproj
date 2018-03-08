@@ -22,6 +22,7 @@
     <Description>Test suite for RSMassTransit.Client and related assemblies.</Description>
     <TargetFramework>net471</TargetFramework>
     <RootNamespace>RSMassTransit</RootNamespace>
+    <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
