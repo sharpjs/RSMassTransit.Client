@@ -14,6 +14,7 @@
     OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 */
 
+using System;
 using System.Threading.Tasks;
 using RSMassTransit.Messages;
 
@@ -22,7 +23,7 @@ namespace RSMassTransit.Client
     /// <summary>
     ///   Interface implemented by RSMassTransit clients.
     /// </summary>
-    public interface IReportingServicesClient
+    public interface IReportingServicesClient : IDisposable
     {
         /// <summary>
         ///   Executes a report asynchronously.
