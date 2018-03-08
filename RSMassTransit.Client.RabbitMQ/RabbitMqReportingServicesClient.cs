@@ -25,25 +25,40 @@ namespace RSMassTransit.Client.RabbitMQ
     /// </summary>
     public class RabbitMqReportingServicesClient : ReportingServicesClient
     {
+        /// <summary>
+        ///   The scheme component required in message bus URIs.
+        /// </summary>
+        public const string
+            UriScheme = "rabbitmq";
+
+        /// <summary>
+        ///   Creates a new <see cref="RabbitMqReportingServicesClient"/>
+        ///   instance.
+        /// </summary>
+        /// <param name="configuration"></param>
+        public RabbitMqReportingServicesClient(ReportingBusConfiguration configuration)
+            : base(configuration) { }
+
         /// <inheritdoc/>
-        protected override IBusControl CreateBus()
+        protected override IBusControl CreateBus(out Uri queueUri)
         {
-            var _BusUri = new UriBuilder(
-                RabbitMqScheme, BusUri.Host, BusUri.Port, BusUri.AbsolutePath
+            var c = Configuration;
+
+            var uri = new UriBuilder(
+                UriScheme, c.BusUri.Host, c.BusUri.Port, c.BusUri.AbsolutePath
             ).Uri;
 
-            //WriteVerbose($"Using RabbitMQ: {BusUri}");
-
-            var _Bus = MassTransit.Bus.Factory.CreateUsingRabbitMq(b =>
+            var bus = MassTransit.Bus.Factory.CreateUsingRabbitMq(b =>
             {
-                b.Host(BusUri, h =>
+                b.Host(uri, h =>
                 {
-                    h.Username(BusCredential.UserName);
-                    h.Password(BusCredential.Password);
+                    h.Username(c.BusCredential.UserName);
+                    h.Password(c.BusCredential.Password);
                 });
             });
 
-            return _Bus;
+            queueUri = new Uri(uri, c.BusQueue);
+            return bus;
         }
     }
 }

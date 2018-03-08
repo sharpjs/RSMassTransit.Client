@@ -15,6 +15,7 @@
 */
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using RSMassTransit.Messages;
 
@@ -29,7 +30,12 @@ namespace RSMassTransit.Client
         ///   Executes a report asynchronously.
         /// </summary>
         /// <param name="request">An object specifying parameters for report execution.</param>
+        /// <param name="timeout">The duration after which the client will cease waiting for a response.</param>
+        /// <param name="cancellationToken">A token that can cancel the operation.</param>
         /// <returns>An object containing the result of report execution.</returns>
-        Task<IExecuteReportResponse> ExecuteAsync(IExecuteReportRequest request);
+        Task<IExecuteReportResponse> ExecuteAsync(
+            IExecuteReportRequest request,
+            TimeSpan?             timeout           = default,
+            CancellationToken     cancellationToken = default);
     }
 }

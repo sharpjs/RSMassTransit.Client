@@ -27,30 +27,47 @@ namespace RSMassTransit.Client.AzureServiceBus
     /// </summary>
     public class AzureServiceBusReportingServicesClient : ReportingServicesClient
     {
+        /// <summary>
+        ///   The scheme component required in message bus URIs.
+        /// </summary>
+        public const string
+            UriScheme = "sb";
+
+        /// <summary>
+        ///   Creates a new <see cref="AzureServiceBusReportingServicesClient"/>
+        ///   instance.
+        /// </summary>
+        /// <param name="configuration"></param>
+        public AzureServiceBusReportingServicesClient(ReportingBusConfiguration configuration)
+            : base(configuration) { }
+
+        //public static bool TryCreate()
+
         /// <inheritdoc/>
-        protected override IBusControl CreateBus()
+        protected override IBusControl CreateBus(out Uri queueUri)
         {
-            var _BusUri = ServiceBusEnvironment.CreateServiceUri(
-                AzureServiceBusScheme, BusUri.Host, servicePath: ""
+            var c = Configuration;
+
+            var uri = ServiceBusEnvironment.CreateServiceUri(
+                UriScheme, c.BusUri.Host, servicePath: ""
             );
 
-            //WriteVerbose($"Using Azure Service Bus: {BusUri}");
-
-            var _Bus = MassTransit.Bus.Factory.CreateUsingAzureServiceBus(b =>
+            var bus = Bus.Factory.CreateUsingAzureServiceBus(b =>
             {
-                b.Host(BusUri, h =>
+                b.Host(uri, h =>
                 {
                     h.SharedAccessSignature(s =>
                     {
-                        s.KeyName         = BusCredential.UserName;
-                        s.SharedAccessKey = BusCredential.Password;
+                        s.KeyName         = c.BusCredential.UserName;
+                        s.SharedAccessKey = c.BusCredential.Password;
                         s.TokenTimeToLive = TimeSpan.FromDays(1);
                         s.TokenScope      = TokenScope.Namespace;
                     });
                 });
             });
 
-            return _Bus;
+            queueUri = new Uri(uri, c.BusQueue);
+            return bus;
         }
     }
 }

@@ -15,7 +15,7 @@
 */
 
 using System;
-using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using MassTransit;
 using RSMassTransit.Messages;
@@ -27,53 +27,64 @@ namespace RSMassTransit.Client
     /// </summary>
     public abstract class ReportingServicesClient : IReportingServicesClient
     {
-        public const string
-            DefaultBusQueue       = "reports",
-            RabbitMqScheme        = "rabbitmq",
-            AzureServiceBusScheme = "sb";
-
-        public const int
-            DefaultTimeoutSeconds = 10;
-
-        private bool _isDisposed;
-
-        private IRequestClient<IExecuteReportRequest, IExecuteReportResponse> _executeClient;
+        private readonly IBusControl _bus;
+        private readonly Uri         _queueUri;
+        private int                  _isDisposed;
 
         /// <summary>
-        ///   Creates a new <see cref="ReportingServicesClient"/> instance.
+        ///   Creates a new <see cref="ReportingServicesClient"/> instance with
+        ///   the specified configuration.
         /// </summary>
-        protected ReportingServicesClient() { }
+        /// <param name="configuration">
+        ///   The configuration for the client, specifying how to communicate
+        ///   with RSMassTransit.
+        /// </param>
+        protected ReportingServicesClient(ReportingBusConfiguration configuration)
+        {
+            Configuration = configuration
+                ?? throw new ArgumentNullException(nameof(configuration));
 
-        public Uri BusUri { get; set; }
+            _bus = CreateBus(out _queueUri);
+        }
 
-        public string BusQueue { get; set; } = DefaultBusQueue;
+        /// <summary>
+        ///   The configuration of the client, specifying how to communicate
+        ///   with RSMassTransit.
+        /// </summary>
+        public ReportingBusConfiguration Configuration { get; }
 
-        public NetworkCredential BusCredential { get; set; }
-
-        public int TimeoutSeconds { get; set; } = DefaultTimeoutSeconds;
-
-        protected IBusControl Bus { get; private set; }
+        /// <summary>
+        ///   When implemented in a derived class, creates the message bus
+        ///   instance used to communicate with RSMassTransit.
+        /// </summary>
+        /// <param name="queueUri">
+        ///   When this method returns, contains the normalized URI of the bus
+        ///   queue used to send and receive messages.
+        /// </param>
+        /// <returns>
+        ///   The message bus instance on which to send and receive messages.
+        /// </returns>
+        protected abstract IBusControl CreateBus(out Uri queueUri);
 
         /// <inheritdoc/>
-        public Task<IExecuteReportResponse> ExecuteAsync(IExecuteReportRequest request)
-        {
-            CreateBusClient(out _executeClient);
+        public Task<IExecuteReportResponse> ExecuteAsync(
+            IExecuteReportRequest request,
+            TimeSpan?             timeout           = default,
+            CancellationToken     cancellationToken = default)
+            => SendAsync<IExecuteReportRequest, IExecuteReportResponse>(request);
 
-            return _executeClient.Request(request);
-        }
-
-        protected abstract IBusControl CreateBus();
-
-        private void CreateBusClient<TRequest, TResponse>
-            (out IRequestClient<TRequest, TResponse> client)
+        private Task<TResponse> SendAsync<TRequest, TResponse>(
+            TRequest          request,
+            TimeSpan?         timeout           = default,
+            CancellationToken cancellationToken = default)
             where TRequest  : class
             where TResponse : class
-        {
-            client = Bus.CreateRequestClient<TRequest, TResponse>(
-                new Uri(BusUri, BusQueue),
-                TimeSpan.FromSeconds(TimeoutSeconds)
-            );
-        }
+            => _bus
+                .CreateRequestClient<TRequest, TResponse>(
+                    _queueUri,
+                    timeout ?? Configuration.RequestTimeout
+                )
+                .Request(request, cancellationToken);
 
         /// <summary>
         ///   Stops the bus instance used by the client and releases any
@@ -102,19 +113,11 @@ namespace RSMassTransit.Client
         /// </remarks>
         protected virtual void Dispose(bool managed)
         {
-            if (_isDisposed)
-                return;
+            if (Interlocked.Exchange(ref _isDisposed, 1) == 1)
+                return; // already disposed
 
             if (managed)
-                DisposeBus();
-
-            _isDisposed = true;
-        }
-
-        private void DisposeBus()
-        {
-            Bus?.Stop();
-            Bus = null;
+                _bus?.Stop();
         }
     }
 }
