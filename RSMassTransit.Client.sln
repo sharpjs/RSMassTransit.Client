@@ -3,12 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSMassTransit.Client", "RSMassTransit.Client\RSMassTransit.Client.csproj", "{F0A95319-E362-44C3-BBA9-2C354CD2359C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSMassTransit.Client.RabbitMQ", "RSMassTransit.Client.RabbitMQ\RSMassTransit.Client.RabbitMQ.csproj", "{89D2B946-010E-4089-B5EE-421CAF6B40C9}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSMassTransit.Client.AzureServiceBus", "RSMassTransit.Client.AzureServiceBus\RSMassTransit.Client.AzureServiceBus.csproj", "{B450152E-CA32-4247-B9CF-02645652D211}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".root", ".root", "{CAAC4622-F900-4299-9B7B-5C53A2EB8670}"
 	ProjectSection(SolutionItems) = preProject
 		.gitattributes = .gitattributes
@@ -20,7 +14,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".root", ".root", "{CAAC4622
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSMassTransit.Client.Tests", "RSMassTransit.Client.Tests\RSMassTransit.Client.Tests.csproj", "{6C45E264-475F-401E-9CEE-C3D7327F24EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSMassTransit.Client", "RSMassTransit.Client\RSMassTransit.Client.csproj", "{F0A95319-E362-44C3-BBA9-2C354CD2359C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSMassTransit.Client.RabbitMQ", "RSMassTransit.Client.RabbitMQ\RSMassTransit.Client.RabbitMQ.csproj", "{89D2B946-010E-4089-B5EE-421CAF6B40C9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSMassTransit.Client.AzureServiceBus", "RSMassTransit.Client.AzureServiceBus\RSMassTransit.Client.AzureServiceBus.csproj", "{B450152E-CA32-4247-B9CF-02645652D211}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSMassTransit.Client.Tests", "RSMassTransit.Client.Tests\RSMassTransit.Client.Tests.csproj", "{6C45E264-475F-401E-9CEE-C3D7327F24EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
