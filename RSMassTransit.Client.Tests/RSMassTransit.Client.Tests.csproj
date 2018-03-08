@@ -38,4 +38,8 @@
     <PackageReference Include="RSMassTransit.Client.RabbitMQ" Version="[0.0,1.0)" Condition="'$(Configuration)' == 'Release'" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
+  </ItemGroup>
+
 </Project>
