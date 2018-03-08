@@ -15,16 +15,42 @@
 */
 
 using System;
-using System.Threading.Tasks;
-using RSMassTransit.Messages;
+using MassTransit;
+using MassTransit.AzureServiceBusTransport;
+using Microsoft.ServiceBus;
 
 namespace RSMassTransit.Client.AzureServiceBus
 {
-    public class AzureServiceBusReportingServicesClient : IReportingServicesClient
+    /// <summary>
+    ///   Client that invokes actions on a RSMassTransit instance via messages
+    ///   in an Azure Service Bus namespace.
+    /// </summary>
+    public class AzureServiceBusReportingServicesClient : ReportingServicesClient
     {
-        public Task<IExecuteReportResponse> ExecuteAsync(IExecuteReportRequest request)
+        /// <inheritdoc/>
+        protected override IBusControl CreateBus()
         {
-            throw new NotImplementedException();
+            var _BusUri = ServiceBusEnvironment.CreateServiceUri(
+                AzureServiceBusScheme, BusUri.Host, servicePath: ""
+            );
+
+            //WriteVerbose($"Using Azure Service Bus: {BusUri}");
+
+            var _Bus = MassTransit.Bus.Factory.CreateUsingAzureServiceBus(b =>
+            {
+                b.Host(BusUri, h =>
+                {
+                    h.SharedAccessSignature(s =>
+                    {
+                        s.KeyName         = BusCredential.UserName;
+                        s.SharedAccessKey = BusCredential.Password;
+                        s.TokenTimeToLive = TimeSpan.FromDays(1);
+                        s.TokenScope      = TokenScope.Namespace;
+                    });
+                });
+            });
+
+            return _Bus;
         }
     }
 }

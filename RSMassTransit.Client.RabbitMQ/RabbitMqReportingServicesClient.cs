@@ -15,16 +15,35 @@
 */
 
 using System;
-using System.Threading.Tasks;
-using RSMassTransit.Messages;
+using MassTransit;
 
 namespace RSMassTransit.Client.RabbitMQ
 {
-    public class RabbitMqReportingServicesClient : IReportingServicesClient
+    /// <summary>
+    ///   Client that invokes actions on a RSMassTransit instance via a
+    ///   RabbitMQ message bus.
+    /// </summary>
+    public class RabbitMqReportingServicesClient : ReportingServicesClient
     {
-        public Task<IExecuteReportResponse> ExecuteAsync(IExecuteReportRequest request)
+        /// <inheritdoc/>
+        protected override IBusControl CreateBus()
         {
-            throw new NotImplementedException();
+            var _BusUri = new UriBuilder(
+                RabbitMqScheme, BusUri.Host, BusUri.Port, BusUri.AbsolutePath
+            ).Uri;
+
+            //WriteVerbose($"Using RabbitMQ: {BusUri}");
+
+            var _Bus = MassTransit.Bus.Factory.CreateUsingRabbitMq(b =>
+            {
+                b.Host(BusUri, h =>
+                {
+                    h.Username(BusCredential.UserName);
+                    h.Password(BusCredential.Password);
+                });
+            });
+
+            return _Bus;
         }
     }
 }
