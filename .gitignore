@@ -1,20 +1,13 @@
 # Build Products
 obj/
 bin/
+/packages/
 /dist/
 
 # Visual Studio
 .vs/
-*.suo
 *.user
-*.cache
 
-# NuGet
-/packages/
-
-# Testing
-TestResults
-TestResult*.xml
 # Local Files
 /Local.props
 
