@@ -17,6 +17,7 @@
   -->
 
   <Import Project="..\General.props" />
+  <Import Project="..\Local.props" Condition="Exists('..\Local.props')" />
 
   <PropertyGroup>
     <Description>RabbitMQ client implementation for RSMassTransit, a MassTransit message bus interface for SQL Server Reporting Services.</Description>
