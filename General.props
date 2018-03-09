@@ -18,7 +18,7 @@
 
   <PropertyGroup>
     <Product>RSMassTransit.Client</Product>
-    <Version>0.0.0-local</Version>
+    <Version>0.0.0-alpha</Version>
     <Authors>Jeffrey Sharp</Authors>
     <Company>Jeffrey Sharp</Company>
     <Copyright>Copyright 2018 Jeffrey Sharp</Copyright>
