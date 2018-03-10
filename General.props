@@ -20,7 +20,6 @@
     <Product>RSMassTransit.Client</Product>
     <Version>0.0.0-local</Version>
     <Authors>Jeffrey Sharp</Authors>
-    <Company>Jeffrey Sharp</Company>
     <Copyright>Copyright 2018 Jeffrey Sharp</Copyright>
     <PackageLicenseUrl>https://github.com/sharpjs/RSMassTransit.Client/blob/master/LICENSE.txt</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/sharpjs/RSMassTransit.Client</PackageProjectUrl>
