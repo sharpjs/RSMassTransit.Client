@@ -18,10 +18,21 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSMassTransit.Client", "RSMassTransit.Client\RSMassTransit.Client.csproj", "{F0A95319-E362-44C3-BBA9-2C354CD2359C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSMassTransit.Client.RabbitMQ", "RSMassTransit.Client.RabbitMQ\RSMassTransit.Client.RabbitMQ.csproj", "{89D2B946-010E-4089-B5EE-421CAF6B40C9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F0A95319-E362-44C3-BBA9-2C354CD2359C} = {F0A95319-E362-44C3-BBA9-2C354CD2359C}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSMassTransit.Client.AzureServiceBus", "RSMassTransit.Client.AzureServiceBus\RSMassTransit.Client.AzureServiceBus.csproj", "{B450152E-CA32-4247-B9CF-02645652D211}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F0A95319-E362-44C3-BBA9-2C354CD2359C} = {F0A95319-E362-44C3-BBA9-2C354CD2359C}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSMassTransit.Client.Tests", "RSMassTransit.Client.Tests\RSMassTransit.Client.Tests.csproj", "{6C45E264-475F-401E-9CEE-C3D7327F24EC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F0A95319-E362-44C3-BBA9-2C354CD2359C} = {F0A95319-E362-44C3-BBA9-2C354CD2359C}
+		{B450152E-CA32-4247-B9CF-02645652D211} = {B450152E-CA32-4247-B9CF-02645652D211}
+		{89D2B946-010E-4089-B5EE-421CAF6B40C9} = {89D2B946-010E-4089-B5EE-421CAF6B40C9}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
