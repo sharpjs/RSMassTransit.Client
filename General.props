@@ -37,22 +37,4 @@ https://github.com/sharpjs/RSMassTransit.Client/releases
     <PackageOutputPath>..\dist\</PackageOutputPath>
   </PropertyGroup>
 
-  <!--
-    This target sets the file version to the three numeric components of the
-    package version plus a fourth component derived from the build counter.
-    Provide the build counter as a MSBuild command line argument (example:
-    `/p:BuildCounter=1234`) or in a Local.props file.
-  -->
-  <Target Name="GetFileVersionUsingBuildCounter"
-          BeforeTargets="GetAssemblyVersion"
-          Condition="'$(BuildCounter)' != ''">
-    <PropertyGroup>
-        <FileVersion>$(
-          [System.Text.RegularExpressions.Regex]::Match($(Version),`^[0-9.]+`)
-        ).$(
-          [MSBuild]::BitwiseAnd($(BuildCounter), 65535)
-        )</FileVersion>
-    </PropertyGroup>
-  </Target>
-
 </Project>
