@@ -26,6 +26,11 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
+  <ItemGroup Condition="'($TargetFramework)' == 'netstandard2.0'">
+    <!-- https://github.com/dotnet/standard/issues/542https://github.com/dotnet/standard/issues/542 -->
+    <Reference Include="netstandard" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="MassTransit" Version="4.0.1" />
   </ItemGroup>
