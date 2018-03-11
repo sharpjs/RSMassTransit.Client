@@ -22,7 +22,15 @@ namespace RSMassTransit.Client.Internal
 {
     internal static class StringBuilderExtensions
     {
-        internal static StringBuilder AppendDelimitedList(
+        /// <summary>
+        ///   Appends a delimited, separated list to the <c>StringBuilder</c>.
+        /// </summary>
+        /// <param name="builder">The instance to which the list should be appended.</param>
+        /// <param name="items">The items from which to form the list.</param>
+        /// <param name="separator">The string to separate items in the list.</param>
+        /// <param name="delimiter">The string to delimit each item in the list.</param>
+        /// <returns>The <paramref name="builder"/> instance.</returns>
+        public static StringBuilder AppendDelimitedList(
             this StringBuilder  builder,
             IEnumerable<string> items,
             string              separator = ", ",
