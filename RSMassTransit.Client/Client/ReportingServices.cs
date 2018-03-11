@@ -21,6 +21,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using MassTransit;
+using RSMassTransit.Client.Internal;
 using RSMassTransit.Messages;
 using static System.Reflection.BindingFlags;
 using static System.StringComparison;
@@ -30,21 +31,21 @@ namespace RSMassTransit.Client
     /// <summary>
     ///   Base class for RSMassTransit clients.
     /// </summary>
-    public abstract class ReportingServicesClient : IReportingServicesClient
+    public abstract class ReportingServices : IReportingServices
     {
         private readonly IBusControl _bus;
         private readonly Uri         _queueUri;
         private int                  _isDisposed;
 
         /// <summary>
-        ///   Creates a new <see cref="ReportingServicesClient"/> instance with
-        ///   the specified configuration.
+        ///   Creates a new <see cref="ReportingServices"/> instance with the
+        ///   specified configuration.
         /// </summary>
         /// <param name="configuration">
         ///   The configuration for the client, specifying how to communicate
         ///   with RSMassTransit.
         /// </param>
-        protected ReportingServicesClient(ReportingBusConfiguration configuration)
+        protected ReportingServices(ReportingServicesConfiguration configuration)
         {
             Configuration = configuration
                 ?? throw new ArgumentNullException(nameof(configuration));
@@ -56,7 +57,7 @@ namespace RSMassTransit.Client
         ///   The configuration of the client, specifying how to communicate
         ///   with RSMassTransit.
         /// </summary>
-        public ReportingBusConfiguration Configuration { get; }
+        public ReportingServicesConfiguration Configuration { get; }
 
         /// <summary>
         ///   When implemented in a derived class, creates the message bus
@@ -72,11 +73,28 @@ namespace RSMassTransit.Client
         protected abstract IBusControl CreateBus(out Uri queueUri);
 
         /// <inheritdoc/>
-        public Task<IExecuteReportResponse> ExecuteAsync(
+        public virtual IExecuteReportResponse ExecuteReport(
+            IExecuteReportRequest request,
+            TimeSpan?             timeout = default)
+            => Send<IExecuteReportRequest, IExecuteReportResponse>(request, timeout);
+
+        /// <inheritdoc/>
+        public virtual Task<IExecuteReportResponse> ExecuteReportAsync(
             IExecuteReportRequest request,
             TimeSpan?             timeout           = default,
             CancellationToken     cancellationToken = default)
-            => SendAsync<IExecuteReportRequest, IExecuteReportResponse>(request);
+            => SendAsync<IExecuteReportRequest, IExecuteReportResponse>(request, timeout, cancellationToken);
+
+        private TResponse Send<TRequest, TResponse>(
+            TRequest          request,
+            TimeSpan?         timeout           = default,
+            CancellationToken cancellationToken = default)
+            where TRequest  : class
+            where TResponse : class
+        {
+            using (new AsyncScope())
+                return SendAsync<TRequest, TResponse>(request, timeout).Result;
+        }
 
         private Task<TResponse> SendAsync<TRequest, TResponse>(
             TRequest          request,
@@ -84,22 +102,24 @@ namespace RSMassTransit.Client
             CancellationToken cancellationToken = default)
             where TRequest  : class
             where TResponse : class
-            => _bus
+        {
+            return _bus
                 .CreateRequestClient<TRequest, TResponse>(
                     _queueUri,
                     timeout ?? Configuration.RequestTimeout
                 )
                 .Request(request, cancellationToken);
+        }
 
         /// <summary>
-        ///   Creates a new <see cref="ReportingServicesClient"/> instance with
+        ///   Creates a new <see cref="ReportingServices"/> instance with
         ///   the specified configuration.
         /// </summary>
         /// <param name="configuration">
         ///   The configuration for the client, specifying how to communicate
         ///   with RSMassTransit.
         /// </param>
-        public static ReportingServicesClient Create(ReportingBusConfiguration configuration)
+        public static ReportingServices Create(ReportingServicesConfiguration configuration)
         {
             if (configuration == null)
                 throw new ArgumentNullException(nameof(configuration));
@@ -110,7 +130,7 @@ namespace RSMassTransit.Client
             if (!supportedSchemes.TryGetValue(requestedScheme, out Type type))
                 throw OnUnsupportedScheme(requestedScheme, supportedSchemes.Keys);
 
-            return (ReportingServicesClient) Activator.CreateInstance(type, configuration);
+            return (ReportingServices) Activator.CreateInstance(type, configuration);
         }
 
         private static SortedDictionary<string, Type> DiscoverSupportedSchemes()
@@ -126,7 +146,7 @@ namespace RSMassTransit.Client
                 foreach (var type in assembly.GetExportedTypes())
                 {
                     // Type must be a concrete client class
-                    if (!typeof(ReportingServicesClient).IsAssignableFrom(type) || type.IsAbstract)
+                    if (!typeof(ReportingServices).IsAssignableFrom(type) || type.IsAbstract)
                         continue;
 
                     // Type must declare a URI scheme
@@ -187,10 +207,10 @@ namespace RSMassTransit.Client
         ///   <c>false</c> to dispose only unamanged resources.
         /// </param>
         /// <remarks>
-        ///   The current <see cref="ReportingServicesClient"/> implementation
-        ///   does not expect to own unmanaged resources and thus does not
-        ///   provide a finalizer.  Thus the <paramref name="managed"/>
-        ///   parameter always will be <c>true</c>.
+        ///   The current <see cref="ReportingServices"/> implementation does
+        ///   not expect to own unmanaged resources and thus does not provide a
+        ///   finalizer.  Thus the <paramref name="managed"/> parameter always
+        ///   will be <c>true</c>.
         /// </remarks>
         protected virtual void Dispose(bool managed)
         {

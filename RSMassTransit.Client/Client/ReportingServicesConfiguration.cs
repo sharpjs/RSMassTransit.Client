@@ -22,7 +22,7 @@ namespace RSMassTransit.Client
     /// <summary>
     ///   Properties specifying how to communicate with a RSMassTransit instance.
     /// </summary>
-    public class ReportingBusConfiguration
+    public class ReportingServicesConfiguration
     {
         private const string
             DefaultBusQueue = "reports";

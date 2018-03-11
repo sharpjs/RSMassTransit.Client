@@ -22,18 +22,31 @@ using RSMassTransit.Messages;
 namespace RSMassTransit.Client
 {
     /// <summary>
-    ///   Interface implemented by RSMassTransit clients.
+    ///   Interface to SQL Server Reporting Services provided by RSMassTransit clients.
     /// </summary>
-    public interface IReportingServicesClient : IDisposable
+    public interface IReportingServices : IDisposable
     {
+        /// <summary>
+        ///   Executes a report.
+        /// </summary>
+        /// <param name="request">The parameters for report execution.</param>
+        /// <param name="timeout">The duration after which the client will cease waiting for a response.</param>
+        /// <returns>The result of report execution.</returns>
+        IExecuteReportResponse ExecuteReport(
+            IExecuteReportRequest request,
+            TimeSpan?             timeout = default);
+
         /// <summary>
         ///   Executes a report asynchronously.
         /// </summary>
-        /// <param name="request">An object specifying parameters for report execution.</param>
+        /// <param name="request">The parameters for report execution.</param>
         /// <param name="timeout">The duration after which the client will cease waiting for a response.</param>
         /// <param name="cancellationToken">A token that can cancel the operation.</param>
-        /// <returns>An object containing the result of report execution.</returns>
-        Task<IExecuteReportResponse> ExecuteAsync(
+        /// <returns>
+        ///   A task representing the asynchronous operation.
+        ///   The task's <c>Result</c> property returns the result of report execution.
+        /// </returns>
+        Task<IExecuteReportResponse> ExecuteReportAsync(
             IExecuteReportRequest request,
             TimeSpan?             timeout           = default,
             CancellationToken     cancellationToken = default);

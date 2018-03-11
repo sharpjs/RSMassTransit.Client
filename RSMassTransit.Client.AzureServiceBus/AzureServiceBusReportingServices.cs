@@ -25,7 +25,7 @@ namespace RSMassTransit.Client.AzureServiceBus
     ///   Client that invokes actions on a RSMassTransit instance via messages
     ///   in an Azure Service Bus namespace.
     /// </summary>
-    public class AzureServiceBusReportingServicesClient : ReportingServicesClient
+    public class AzureServiceBusReportingServices : ReportingServices
     {
         /// <summary>
         ///   The scheme component required in message bus URIs.
@@ -34,11 +34,14 @@ namespace RSMassTransit.Client.AzureServiceBus
             UriScheme = "sb";
 
         /// <summary>
-        ///   Creates a new <see cref="AzureServiceBusReportingServicesClient"/>
-        ///   instance.
+        ///   Creates a new <see cref="AzureServiceBusReportingServices"/>
+        ///   instance with the specified configuration.
         /// </summary>
-        /// <param name="configuration"></param>
-        public AzureServiceBusReportingServicesClient(ReportingBusConfiguration configuration)
+        /// <param name="configuration">
+        ///   The configuration for the client, specifying how to communicate
+        ///   with RSMassTransit.
+        /// </param>
+        public AzureServiceBusReportingServices(ReportingServicesConfiguration configuration)
             : base(configuration) { }
 
         /// <inheritdoc/>

@@ -23,7 +23,7 @@ namespace RSMassTransit.Client.RabbitMQ
     ///   Client that invokes actions on a RSMassTransit instance via a
     ///   RabbitMQ message bus.
     /// </summary>
-    public class RabbitMqReportingServicesClient : ReportingServicesClient
+    public class RabbitMqReportingServices : ReportingServices
     {
         /// <summary>
         ///   The scheme component required in message bus URIs.
@@ -32,11 +32,14 @@ namespace RSMassTransit.Client.RabbitMQ
             UriScheme = "rabbitmq";
 
         /// <summary>
-        ///   Creates a new <see cref="RabbitMqReportingServicesClient"/>
-        ///   instance.
+        ///   Creates a new <see cref="RabbitMqReportingServices"/>
+        ///   instance with the specified configuration.
         /// </summary>
-        /// <param name="configuration"></param>
-        public RabbitMqReportingServicesClient(ReportingBusConfiguration configuration)
+        /// <param name="configuration">
+        ///   The configuration for the client, specifying how to communicate
+        ///   with RSMassTransit.
+        /// </param>
+        public RabbitMqReportingServices(ReportingServicesConfiguration configuration)
             : base(configuration) { }
 
         /// <inheritdoc/>
