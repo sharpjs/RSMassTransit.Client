@@ -16,13 +16,19 @@
 
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+#if NETFX
 using System.Security;
+#endif
 
-// Compliance
+// COM Compliance
 [assembly: ComVisible(false)]
 
 // Security
+#if NETFX
 [assembly: SecurityRules(SecurityRuleSet.Level2)]
+#endif
+
+// Visibility
 [assembly: InternalsVisibleTo("RSMassTransit.Client.Tests")]
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
                             // ^^^^^^^^^^^^^^^^^^^^^^^^
