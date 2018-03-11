@@ -21,19 +21,14 @@
 
   <PropertyGroup>
     <Description>Messages types and client core for RSMassTransit, a MassTransit message bus interface for SQL Server Reporting Services.</Description>
-    <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
+    <TargetFrameworks>net452</TargetFrameworks>
+    <!--<TargetFrameworks>netstandard2.0;net452</TargetFrameworks>-->
     <RootNamespace>RSMassTransit</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
-  <ItemGroup Condition="'($TargetFramework)' == 'netstandard2.0'">
-    <!-- https://github.com/dotnet/standard/issues/542https://github.com/dotnet/standard/issues/542 -->
-    <Reference Include="netstandard" />
-  </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="MassTransit" Version="4.0.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
   </ItemGroup>
 
   <ItemGroup>
