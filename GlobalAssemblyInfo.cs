@@ -16,6 +16,7 @@
 
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+
 #if NETFX
 using System.Security;
 #endif
@@ -23,8 +24,8 @@ using System.Security;
 // COM Compliance
 [assembly: ComVisible(false)]
 
-// Security
 #if NETFX
+// Security
 [assembly: SecurityRules(SecurityRuleSet.Level2)]
 #endif
 
