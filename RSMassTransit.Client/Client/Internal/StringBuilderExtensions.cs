@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace RSMassTransit.Client
+namespace RSMassTransit.Client.Internal
 {
     internal static class StringBuilderExtensions
     {

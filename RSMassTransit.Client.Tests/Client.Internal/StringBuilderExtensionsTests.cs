@@ -18,7 +18,7 @@ using System.Text;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace RSMassTransit.Client
+namespace RSMassTransit.Client.Internal
 {
     [TestFixture]
     public class StringBuilderExtensionsTests
