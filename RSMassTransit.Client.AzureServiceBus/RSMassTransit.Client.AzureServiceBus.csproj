@@ -27,8 +27,7 @@
 
   <ItemGroup>
     <PackageReference Include="MassTransit.AzureServiceBus" Version="4.0.1" />
-    <PackageReference Include="RSMassTransit.Client" Version="$(Version)" Condition="'$(Configuration)' == 'Debug'" />
-    <PackageReference Include="RSMassTransit.Client" Version="[0.0,1.0)" Condition="'$(Configuration)' == 'Release'" />
+    <PackageReference Include="RSMassTransit.Client" Version="$(Version)" />
   </ItemGroup>
 
   <ItemGroup>

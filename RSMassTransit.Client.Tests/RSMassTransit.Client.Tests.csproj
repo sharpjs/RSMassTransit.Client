@@ -32,12 +32,9 @@
     <PackageReference Include="Moq" Version="4.8.2" />
     <PackageReference Include="NUnit" Version="3.9.0" />
     <PackageReference Include="NUnit.Extension.TeamCityEventListener" Version="1.0.3" />
-    <PackageReference Include="RSMassTransit.Client" Version="$(Version)" Condition="'$(Configuration)' == 'Debug'" />
-    <PackageReference Include="RSMassTransit.Client" Version="[0.0,1.0)" Condition="'$(Configuration)' == 'Release'" />
-    <PackageReference Include="RSMassTransit.Client.AzureServiceBus" Version="$(Version)" Condition="'$(Configuration)' == 'Debug'" />
-    <PackageReference Include="RSMassTransit.Client.AzureServiceBus" Version="[0.0,1.0)" Condition="'$(Configuration)' == 'Release'" />
-    <PackageReference Include="RSMassTransit.Client.RabbitMQ" Version="$(Version)" Condition="'$(Configuration)' == 'Debug'" />
-    <PackageReference Include="RSMassTransit.Client.RabbitMQ" Version="[0.0,1.0)" Condition="'$(Configuration)' == 'Release'" />
+    <PackageReference Include="RSMassTransit.Client" Version="$(Version)" />
+    <PackageReference Include="RSMassTransit.Client.AzureServiceBus" Version="$(Version)" />
+    <PackageReference Include="RSMassTransit.Client.RabbitMQ" Version="$(Version)" />
   </ItemGroup>
 
   <ItemGroup>
