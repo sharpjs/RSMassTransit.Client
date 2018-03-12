@@ -16,7 +16,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,6 +38,10 @@ namespace RSMassTransit.Client
         private readonly IBusControl _bus;
         private readonly Uri         _queueUri;
         private int                  _isDisposed;
+
+        private const string         AssemblyPattern = "RSMassTransit.Client.*.dll";
+        private const string         AssemblyPrefix  = "RSMassTransit.Client.";
+        private static bool          _assembliesLoaded;
 
         /// <summary>
         ///   Creates a new <see cref="ReportingServices"/> instance with the
@@ -124,6 +130,7 @@ namespace RSMassTransit.Client
             if (configuration == null)
                 throw new ArgumentNullException(nameof(configuration));
 
+            LoadAssemblies();
             var supportedSchemes = DiscoverSupportedSchemes();
             var requestedScheme  = configuration.BusUri?.Scheme;
 
@@ -133,6 +140,22 @@ namespace RSMassTransit.Client
             return (ReportingServices) Activator.CreateInstance(type, configuration);
         }
 
+        private static void LoadAssemblies()
+        {
+            if (_assembliesLoaded)
+                return;
+
+            var paths = Directory.GetFiles(
+                AppDomain.CurrentDomain.BaseDirectory,
+                AssemblyPattern
+            );
+
+            foreach (var path in paths)
+                Assembly.LoadFrom(path);
+
+            _assembliesLoaded = true;
+        }
+
         private static SortedDictionary<string, Type> DiscoverSupportedSchemes()
         {
             var schemes = new SortedDictionary<string, Type>(StringComparer.Ordinal);
@@ -140,7 +163,7 @@ namespace RSMassTransit.Client
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
                 // Assembly must be from RSMassTransit.Client family
-                if (!assembly.GetName().Name.StartsWith("RSMassTransit.Client.", Ordinal))
+                if (!assembly.GetName().Name.StartsWith(AssemblyPrefix, Ordinal))
                     continue;
 
                 foreach (var type in assembly.GetExportedTypes())
