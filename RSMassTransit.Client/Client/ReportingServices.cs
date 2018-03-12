@@ -110,12 +110,26 @@ namespace RSMassTransit.Client
             where TRequest  : class
             where TResponse : class
         {
-            return _bus
-                .CreateRequestClient<TRequest, TResponse>(
-                    _queueUri,
-                    timeout ?? Configuration.RequestTimeout
-                )
+            return CreateRequestClient<TRequest, TResponse>(timeout)
                 .Request(request, cancellationToken);
+        }
+
+        /// <summary>
+        ///   Creates a MassTransit request client.
+        /// </summary>
+        /// <typeparam name="TRequest">Type of the request.</typeparam>
+        /// <typeparam name="TResponse">Type of the response.</typeparam>
+        /// <param name="timeout">If specified, overrides the configured timeout.</param>
+        /// <returns>A MassTransit request client.</returns>
+        protected virtual IRequestClient<TRequest, TResponse>
+            CreateRequestClient<TRequest, TResponse>(TimeSpan? timeout = null)
+            where TRequest  : class
+            where TResponse : class
+        {
+            return _bus.CreateRequestClient<TRequest, TResponse>(
+                _queueUri,
+                timeout ?? Configuration.RequestTimeout
+            );
         }
 
         /// <summary>
