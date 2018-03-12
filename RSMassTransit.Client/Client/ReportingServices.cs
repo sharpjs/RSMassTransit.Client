@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading;
@@ -208,6 +209,66 @@ namespace RSMassTransit.Client
                 );
 
             return new ArgumentException(message.ToString(), "configuration");
+        }
+
+        /// <summary>
+        ///   Validates the configured bus URI and converts it to a normalized
+        ///   form.
+        /// </summary>
+        /// <param name="scheme">The required URI scheme.</param>
+        /// <param name="kind">A short human-readable name for the kind of bus URI.</param>
+        /// <returns>The normalized bus URI.</returns>
+        protected virtual Uri NormalizeBusUri(string scheme, string kind)
+        {
+            var uri = Configuration.BusUri;
+
+            var valid
+                =  uri != null
+                && uri.IsAbsoluteUri
+                && uri.Scheme.Equals(scheme, OrdinalIgnoreCase)
+                && !string.IsNullOrEmpty(uri.Host);
+
+            if (!valid)
+                throw new ConfigurationException(string.Format(
+                    "Invalid RSMassTransit client configuration.  " +
+                    "The BusUri value '{0}' is not a valid {2} bus URI.  " +
+                    "The value must be an absolute URI with scheme '{1}' and must contain a hostname.",
+                    uri, scheme, kind
+                ));
+
+            return uri;
+        }
+
+        /// <summary>
+        ///   Validates the configured queue name and converts it to a
+        ///   normalized form.
+        /// </summary>
+        /// <returns>The normalized queue name.</returns>
+        protected virtual string NormalizeBusQueue()
+        {
+            var queue = Configuration.BusQueue;
+
+            return string.IsNullOrEmpty(queue)
+                ? ReportingServicesConfiguration.DefaultBusQueue
+                : queue;
+        }
+
+        /// <summary>
+        ///   Validates the configured bus credential and converts to a
+        ///   normalized form.
+        /// </summary>
+        /// <returns>The normalized bus credential.</returns>
+        protected virtual NetworkCredential NormalizeBusCredential()
+        {
+            var credential = Configuration.BusCredential;
+
+            if (credential == null)
+                throw new ConfigurationException(
+                    "Invalid RSMassTransit client configuration.  " +
+                    "The BusCredential property is null."
+                );
+
+            return credential;
         }
 
         /// <summary>
