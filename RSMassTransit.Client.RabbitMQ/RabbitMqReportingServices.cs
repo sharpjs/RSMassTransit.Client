@@ -15,6 +15,7 @@
 */
 
 using System;
+using System.Net;
 using MassTransit;
 
 namespace RSMassTransit.Client.RabbitMQ
@@ -45,23 +46,38 @@ namespace RSMassTransit.Client.RabbitMQ
         /// <inheritdoc/>
         protected override IBusControl CreateBus(out Uri queueUri)
         {
-            var c = Configuration;
+            var uri        = NormalizeBusUri(UriScheme, "RabbitMQ host");
+            var queue      = NormalizeBusQueue();
+            var credential = NormalizeBusCredential();
 
-            var uri = new UriBuilder(
-                UriScheme, c.BusUri.Host, c.BusUri.Port, c.BusUri.AbsolutePath
-            ).Uri;
-
-            var bus = MassTransit.Bus.Factory.CreateUsingRabbitMq(b =>
+            var bus = Bus.Factory.CreateUsingRabbitMq(b =>
             {
                 b.Host(uri, h =>
                 {
-                    h.Username(c.BusCredential.UserName);
-                    h.Password(c.BusCredential.Password);
+                    h.Username(credential.UserName);
+                    h.Password(credential.Password);
                 });
             });
 
-            queueUri = new Uri(uri, c.BusQueue);
+            queueUri = new Uri(uri, queue);
             return bus;
+        }
+
+        /// <inheritdoc/>
+        protected override Uri NormalizeBusUri(string scheme, string kind)
+        {
+            var uri = base.NormalizeBusUri(scheme, kind);
+
+            return new UriBuilder(
+                UriScheme, uri.Host, uri.Port, uri.AbsolutePath
+            ).Uri;
+        }
+
+        /// <inheritdoc/>
+        protected override NetworkCredential NormalizeBusCredential()
+        {
+            return Configuration.BusCredential
+                ?? new NetworkCredential("guest", "guest");
         }
     }
 }

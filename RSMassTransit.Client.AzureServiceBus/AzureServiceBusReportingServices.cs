@@ -33,6 +33,9 @@ namespace RSMassTransit.Client.AzureServiceBus
         public const string
             UriScheme = "sb";
 
+        private const string
+            HostSuffix = ".servicebus.windows.net";
+
         /// <summary>
         ///   Creates a new <see cref="AzureServiceBusReportingServices"/>
         ///   instance with the specified configuration.
@@ -47,11 +50,9 @@ namespace RSMassTransit.Client.AzureServiceBus
         /// <inheritdoc/>
         protected override IBusControl CreateBus(out Uri queueUri)
         {
-            var c = Configuration;
-
-            var uri = ServiceBusEnvironment.CreateServiceUri(
-                UriScheme, c.BusUri.Host, servicePath: ""
-            );
+            var uri        = NormalizeBusUri(UriScheme, "Azure Service Bus namespace");
+            var queue      = NormalizeBusQueue();
+            var credential = NormalizeBusCredential();
 
             var bus = Bus.Factory.CreateUsingAzureServiceBus(b =>
             {
@@ -59,16 +60,30 @@ namespace RSMassTransit.Client.AzureServiceBus
                 {
                     h.SharedAccessSignature(s =>
                     {
-                        s.KeyName         = c.BusCredential.UserName;
-                        s.SharedAccessKey = c.BusCredential.Password;
+                        s.KeyName         = credential.UserName;
+                        s.SharedAccessKey = credential.Password;
                         s.TokenTimeToLive = TimeSpan.FromDays(1);
                         s.TokenScope      = TokenScope.Namespace;
                     });
                 });
             });
 
-            queueUri = new Uri(uri, c.BusQueue);
+            queueUri = new Uri(uri, queue);
             return bus;
+        }
+
+        /// <inheritdoc/>
+        protected override Uri NormalizeBusUri(string scheme, string kind)
+        {
+            var uri = base.NormalizeBusUri(scheme, kind);
+
+            var host = uri.Host;
+            if (host.EndsWith(HostSuffix, StringComparison.OrdinalIgnoreCase))
+                host = host.Substring(0, host.Length - HostSuffix.Length);
+
+            return ServiceBusEnvironment.CreateServiceUri(
+                UriScheme, host, servicePath: ""
+            );
         }
     }
 }
