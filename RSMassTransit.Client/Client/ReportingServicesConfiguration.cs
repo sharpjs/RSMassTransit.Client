@@ -24,11 +24,15 @@ namespace RSMassTransit.Client
     /// </summary>
     public class ReportingServicesConfiguration
     {
-        private const string
-            DefaultBusQueue = "reports";
+        /// <summary>
+        ///   The default value of the <see cref="BusQueue"/> property.
+        /// </summary>
+        public const string DefaultBusQueue = "reports";
 
-        private const int
-            DefaultRequestTimeoutSeconds = 10;
+        /// <summary>
+        ///   The default value of the <see cref="RequestTimeout"/> property, in seconds.
+        /// </summary>
+        public const int DefaultRequestTimeoutSeconds = 30;
 
         /// <summary>
         ///   URI of the message bus.  The scheme of the URI specifies the kind
@@ -40,17 +44,18 @@ namespace RSMassTransit.Client
         ///   Name of the queue within the message bus.  The default value is
         ///   <c>"reports"</c>.
         /// </summary>
-        public string BusQueue { get; set; }
-            = DefaultBusQueue;
+        public string BusQueue { get; set; } = DefaultBusQueue;
 
         /// <summary>
         ///   Credential used to authenticate with the message bus.
+        ///   If omitted, behavior is client-specific.
         /// </summary>
         public NetworkCredential BusCredential { get; set; }
 
         /// <summary>
         ///   The duration after which the client will cease waiting for a
         ///   response, if the caller does not provide an explicit timeout.
+        ///   The default value is 30 seconds.
         /// </summary>
         public TimeSpan RequestTimeout { get; set; }
             = TimeSpan.FromSeconds(DefaultRequestTimeoutSeconds);
