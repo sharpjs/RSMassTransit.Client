@@ -162,15 +162,31 @@ namespace RSMassTransit.Client
             if (_assembliesLoaded)
                 return;
 
-            var paths = Directory.GetFiles(
-                AppDomain.CurrentDomain.BaseDirectory,
-                AssemblyPattern
-            );
+            string directory = GetAssemblyDirectorySafe();
 
-            foreach (var path in paths)
-                Assembly.LoadFrom(path);
+            if (!string.IsNullOrEmpty(directory))
+                foreach (var path in Directory.GetFiles(directory, AssemblyPattern))
+                    Assembly.LoadFrom(path);
 
             _assembliesLoaded = true;
+        }
+
+        private static string GetAssemblyDirectorySafe()
+        {
+            string path;
+
+            try
+            {
+                path = typeof(ReportingServices).Assembly.Location;
+            }
+            catch (NotSupportedException)
+            {
+                return null;
+            }
+
+            return string.IsNullOrEmpty(path)
+                ? null
+                : Path.GetDirectoryName(path);
         }
 
         private static SortedDictionary<string, Type> DiscoverSupportedSchemes()
