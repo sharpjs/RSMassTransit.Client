@@ -42,6 +42,9 @@ namespace RSMassTransit.Client
 
         protected override IBusControl CreateBus(out Uri queueUri)
         {
+            Bus.Setup(b => b.StartAsync(It.IsAny<CancellationToken>()))
+                .ReturnsAsync(Mock.Of<BusHandle>());
+
             queueUri = new Uri(Uri, ReportingServicesConfiguration.DefaultBusQueue);
             return Bus.Object;
         }
