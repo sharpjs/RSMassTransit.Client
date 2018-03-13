@@ -57,7 +57,9 @@ namespace RSMassTransit.Client
             Configuration = configuration
                 ?? throw new ArgumentNullException(nameof(configuration));
 
-            _bus = CreateBus(out _queueUri);
+            var bus = CreateBus(out _queueUri);
+            bus.Start();
+            _bus = bus;
         }
 
         /// <summary>
