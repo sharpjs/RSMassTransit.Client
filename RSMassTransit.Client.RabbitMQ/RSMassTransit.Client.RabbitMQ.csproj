@@ -35,4 +35,9 @@
     <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
   </ItemGroup>
 
+  <Target Name="RemoveCachedPackages" AfterTargets="Clean">
+    <Message Text="Removing cached packages" Importance="high" />
+    <RemoveDir Directories="..\packages\rsmasstransit.client" ContinueOnError="true" />
+  </Target>
+
 </Project>
