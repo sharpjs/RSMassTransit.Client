@@ -59,5 +59,23 @@ namespace RSMassTransit.Client
         /// </summary>
         public TimeSpan RequestTimeout { get; set; }
             = TimeSpan.FromSeconds(DefaultRequestTimeoutSeconds);
+
+        ///// <summary>
+        /////   The duration after which an unprocessed request is deleted from
+        /////   its queue.
+        ///// </summary>
+        //TimeSpan? RequestTimeToLive { get; }
+
+        ///// <summary>
+        /////   The duration after which the client times out when waiting for a
+        /////   response to a report execution request.
+        ///// </summary>
+        //TimeSpan ExecuteReportTimeout { get; }
+
+        ///// <summary>
+        /////   The duration after which the client times out when waiting for a
+        /////   response to a report management request.
+        ///// </summary>
+        //TimeSpan ManageReportTimeout { get; }
     }
 }
