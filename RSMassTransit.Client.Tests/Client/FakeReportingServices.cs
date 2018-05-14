@@ -56,6 +56,8 @@ namespace RSMassTransit.Client
         }
 
         private Mock<IRequestClient<TRequest, TResponse>> GetRequestClient<TRequest, TResponse>()
+            where TRequest  : class
+            where TResponse : class
         {
             var key = (typeof(TRequest), typeof(TResponse));
 
@@ -66,6 +68,8 @@ namespace RSMassTransit.Client
         }
 
         public void SetupRequest<TRequest, TResponse>(TRequest request, TResponse response)
+            where TRequest  : class
+            where TResponse : class
         {
             GetRequestClient<TRequest, TResponse>()
                 .Setup(c => c.Request(request, It.IsAny<CancellationToken>()))
