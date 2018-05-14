@@ -26,7 +26,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MassTransit.AzureServiceBus" Version="4.0.1" />
+    <PackageReference Include="MassTransit.AzureServiceBus" Version="5.1.0" />
     <PackageReference Include="RSMassTransit.Client" Version="$(Version)" />
   </ItemGroup>
 
