@@ -28,7 +28,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MassTransit" Version="5.1.4" />
+    <PackageReference Include="MassTransit" Version="[5.1.4,6.0.0)" />
   </ItemGroup>
 
   <ItemGroup>
