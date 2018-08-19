@@ -32,6 +32,7 @@
     <PackageReference Include="Moq" Version="4.9.0" />
     <PackageReference Include="NUnit" Version="3.10.1" />
     <PackageReference Include="NUnit.Extension.TeamCityEventListener" Version="1.0.4" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
     <PackageReference Include="RSMassTransit.Client" Version="$(Version)" />
     <PackageReference Include="RSMassTransit.Client.AzureServiceBus" Version="$(Version)" />
     <PackageReference Include="RSMassTransit.Client.RabbitMQ" Version="$(Version)" />
