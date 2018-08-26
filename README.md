@@ -7,4 +7,4 @@ for SQL Server Reporting Services.
 
 ## Status
 
-**Experimental.**  Currently, only report execution is implemented.
+Private beta testing.  Currently, only report execution is implemented.
