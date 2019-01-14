@@ -1,4 +1,6 @@
-﻿/*
+<Project>
+
+  <!--
     Copyright (C) 2019 Jeffrey Sharp
 
     Permission to use, copy, modify, and distribute this software for any
@@ -12,25 +14,21 @@
     WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
     ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
     OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-*/
+  -->
 
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
+  <ItemGroup Condition="!$(TargetFramework.StartsWith('netstandard'))">
+    <PackageReference Include="InheritDoc" Version="[2.0.2]">
+      <ExcludeAssets>all</ExcludeAssets>
+    </PackageReference>
+  </ItemGroup>
 
-#if NETFRAMEWORK
-using System.Security;
-#endif
+  <Target
+    Name="InheritDoc"
+    AfterTargets="CopyFilesToOutputDirectory"
+    Condition="'$(_DocumentationFileProduced)'=='true'">
+    <Exec
+      Command="$(NuGetPackageRoot)inheritdoc\2.0.2\tools\InheritDoc.exe -o"
+      WorkingDirectory="$(OutDir)" />
+  </Target>
 
-// COM Compliance
-[assembly: ComVisible(false)]
-
-#if NETFRAMEWORK
-// Security
-[assembly: SecurityRules(SecurityRuleSet.Level2)]
-#endif
-
-// Visibility
-[assembly: InternalsVisibleTo("RSMassTransit.Client.Tests")]
-[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
-                            // ^^^^^^^^^^^^^^^^^^^^^^^^
-                            // Required for Moq to mock a class with an internal abstract method.
+</Project>

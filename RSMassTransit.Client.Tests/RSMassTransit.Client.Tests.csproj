@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <!--
     Copyright (C) 2018 Jeffrey Sharp
@@ -21,32 +21,28 @@
 
   <PropertyGroup>
     <Description>Test suite for RSMassTransit.Client and related assemblies.</Description>
-    <TargetFramework>net471</TargetFramework>
+    <TargetFramework>net472</TargetFramework>
     <RootNamespace>RSMassTransit</RootNamespace>
     <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentAssertions" Version="5.4.1" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
-    <PackageReference Include="Moq" Version="4.9.0" />
-    <PackageReference Include="NUnit" Version="3.10.1" />
-    <PackageReference Include="NUnit.Extension.TeamCityEventListener" Version="1.0.4" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
-    <PackageReference Include="RSMassTransit.Client" Version="$(Version)" />
-    <PackageReference Include="RSMassTransit.Client.AzureServiceBus" Version="$(Version)" />
-    <PackageReference Include="RSMassTransit.Client.RabbitMQ" Version="$(Version)" />
+    <PackageReference Include="FluentAssertions" Version="5.6.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    <PackageReference Include="Moq" Version="4.10.1" />
+    <PackageReference Include="NUnit" Version="3.11.0" />
+    <PackageReference Include="NUnit.Extension.TeamCityEventListener" Version="1.0.5" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.12.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
+    <DotNetCliToolReference Include="JetBrains.dotCover.CommandLineTools" Version="2018.3.1" />
   </ItemGroup>
 
-  <Target Name="RemoveCachedPackages" AfterTargets="Clean">
-    <Message Text="Removing cached packages" Importance="high" />
-    <RemoveDir Directories="..\packages\rsmasstransit.client" ContinueOnError="true" />
-    <RemoveDir Directories="..\packages\rsmasstransit.client.azureservicebus" ContinueOnError="true" />
-    <RemoveDir Directories="..\packages\rsmasstransit.client.rabbitmq" ContinueOnError="true" />
-  </Target>
+  <ItemGroup>
+    <ProjectReference Include="..\RSMassTransit.Client.AzureServiceBus\RSMassTransit.Client.AzureServiceBus.csproj" />
+    <ProjectReference Include="..\RSMassTransit.Client.RabbitMQ\RSMassTransit.Client.RabbitMQ.csproj" />
+    <ProjectReference Include="..\RSMassTransit.Client\RSMassTransit.Client.csproj" />
+  </ItemGroup>
 
 </Project>

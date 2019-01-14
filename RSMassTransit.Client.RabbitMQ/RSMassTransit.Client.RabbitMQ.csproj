@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <!--
     Copyright (C) 2018 Jeffrey Sharp
@@ -23,21 +23,17 @@
     <Description>RabbitMQ client implementation for RSMassTransit, a MassTransit message bus interface for SQL Server Reporting Services.</Description>
     <TargetFrameworks>net452</TargetFrameworks>
     <!--<TargetFrameworks>netstandard2.0;net452</TargetFrameworks>-->
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>$(VersionIsTagged)</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MassTransit.RabbitMQ" Version="[5.1.4,6.0.0)" />
-    <PackageReference Include="RSMassTransit.Client" Version="[$(Version)]" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="[5.2.1,6.0.0)" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
+    <ProjectReference Include="..\RSMassTransit.Client\RSMassTransit.Client.csproj" />
   </ItemGroup>
 
-  <Target Name="RemoveCachedPackages" AfterTargets="Clean">
-    <Message Text="Removing cached packages" Importance="high" />
-    <RemoveDir Directories="..\packages\rsmasstransit.client" ContinueOnError="true" />
-  </Target>
+  <Import Project="..\InheritDoc.targets" />
 
 </Project>

@@ -1,8 +1,8 @@
 # Build Products
 obj/
 bin/
-/packages/
 /dist/
+/coverage/
 
 # Visual Studio
 .vs/
@@ -10,6 +10,12 @@ bin/
 
 # Local Files
 /Local.props
+
+# Visual Studio Profiler
+*.psess
+*.vsp
+*.vspx
+*.sap
 
 # Temporary Files
 *.log
