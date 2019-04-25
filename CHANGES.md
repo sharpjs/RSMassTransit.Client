@@ -11,4 +11,4 @@ Most lines should begin with one of these words:
 (Future release)
 
 ## [0.0.0](https://github.com/sharpjs/RSMassTransit.Client/tree/v0.0.0)
-(Future release)
+Initial release.  Supports report execution only.
