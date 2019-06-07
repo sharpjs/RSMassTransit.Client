@@ -37,7 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <DotNetCliToolReference Include="JetBrains.dotCover.CommandLineTools" Version="2018.3.4" />
+    <DotNetCliToolReference Include="JetBrains.dotCover.CommandLineTools" Version="2019.1.2" />
   </ItemGroup>
 
   <ItemGroup>
