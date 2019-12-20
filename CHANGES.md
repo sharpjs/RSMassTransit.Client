@@ -9,6 +9,7 @@ Most lines should begin with one of these words:
 
 ## [0.0.2](https://github.com/sharpjs/RSMassTransit.Client/compare/v0.0.1...v0.0.2)
 - Update MassTransit to 5.5.6
+- Add .NET Standard 2.0 target
 - Add package `RSMassTransit.Client.AzureServiceBus.Core`, which uses the newer
   [`Microsoft.Azure.ServiceBus`](https://www.nuget.org/packages/Microsoft.Azure.ServiceBus/)
   package internally.

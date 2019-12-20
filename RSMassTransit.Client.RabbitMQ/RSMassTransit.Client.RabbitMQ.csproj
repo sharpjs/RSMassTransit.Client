@@ -21,8 +21,7 @@
 
   <PropertyGroup>
     <Description>RabbitMQ client implementation for RSMassTransit, a MassTransit message bus interface for SQL Server Reporting Services.</Description>
-    <TargetFrameworks>net452</TargetFrameworks>
-    <!--<TargetFrameworks>netstandard2.0;net452</TargetFrameworks>-->
+    <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
