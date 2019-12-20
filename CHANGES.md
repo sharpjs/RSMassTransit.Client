@@ -8,6 +8,7 @@ Most lines should begin with one of these words:
 (none)
 
 ## [0.0.2](https://github.com/sharpjs/RSMassTransit.Client/compare/v0.0.1...v0.0.2)
+- Update MassTransit to 5.5.6
 
 ## [0.0.1](https://github.com/sharpjs/RSMassTransit.Client/compare/v0.0.0...v0.0.1)
 - Update MassTransit to 5.5.1

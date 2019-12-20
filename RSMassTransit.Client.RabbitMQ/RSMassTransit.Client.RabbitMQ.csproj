@@ -30,7 +30,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MassTransit.RabbitMQ" Version="[5.5.1,6.0.0)" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="[5.5.6,6.0.0)" />
     <!-- Versions for project refs that become package refs in the NuGet package.
          See: https://github.com/dotnet/sdk/issues/1151#issuecomment-297265205 -->
     <PackageReference Include="RSMassTransit.Client" Version="[$(PackageVersion)]" Condition="$(GeneratePackageOnBuild)" />
