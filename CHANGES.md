@@ -4,10 +4,10 @@ This file documents all notable changes.
 Most lines should begin with one of these words:
 *Add*, *Fix*, *Update*, *Change*, *Deprecate*, *Remove*.
 
-## [Unreleased](https://github.com/sharpjs/RSMassTransit.Client/compare/v0.0.2...HEAD)
+## [Unreleased](https://github.com/sharpjs/RSMassTransit.Client/compare/v0.1.0...HEAD)
 (none)
 
-## [0.0.2](https://github.com/sharpjs/RSMassTransit.Client/compare/v0.0.1...v0.0.2)
+## [0.1.0](https://github.com/sharpjs/RSMassTransit.Client/compare/v0.0.1...v0.1.0)
 - Update MassTransit to 5.5.6
 - Add .NET Standard 2.0 target
 - Add package `RSMassTransit.Client.AzureServiceBus.Core`, which uses the newer
