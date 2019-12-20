@@ -24,7 +24,10 @@
     <TargetFrameworks>net452</TargetFrameworks>
     <!--<TargetFrameworks>netstandard2.0;net452</TargetFrameworks>-->
     <RootNamespace>RSMassTransit</RootNamespace>
-    <GeneratePackageOnBuild>$(VersionIsTagged)</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

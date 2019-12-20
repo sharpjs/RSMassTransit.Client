@@ -22,7 +22,10 @@
   <PropertyGroup>
     <Description>Azure Service Bus client implementation for RSMassTransit, a MassTransit message bus interface for SQL Server Reporting Services.</Description>
     <TargetFrameworks>net452</TargetFrameworks>
-    <GeneratePackageOnBuild>$(VersionIsTagged)</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

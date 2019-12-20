@@ -24,6 +24,7 @@
     <TargetFramework>net472</TargetFramework>
     <RootNamespace>RSMassTransit</RootNamespace>
     <DocumentationFile></DocumentationFile>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
