@@ -23,7 +23,7 @@
     <Description>Test suite for RSMassTransit.Client and related assemblies.</Description>
     <TargetFramework>net48</TargetFramework>
     <RootNamespace>RSMassTransit</RootNamespace>
-    <DocumentationFile></DocumentationFile>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 

@@ -31,7 +31,7 @@ https://github.com/sharpjs/RSMassTransit.Client/releases
 
   <PropertyGroup>
     <LangVersion>8.0</LangVersion>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageOutputPath>..\dist\</PackageOutputPath>
   </PropertyGroup>
 
