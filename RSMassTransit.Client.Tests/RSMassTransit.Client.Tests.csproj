@@ -21,7 +21,7 @@
 
   <PropertyGroup>
     <Description>Test suite for RSMassTransit.Client and related assemblies.</Description>
-    <TargetFramework>net48</TargetFramework>
+    <TargetFrameworks>net48;netcoreapp3.1</TargetFrameworks>
     <RootNamespace>RSMassTransit</RootNamespace>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <IsPackable>false</IsPackable>
@@ -42,7 +42,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RSMassTransit.Client.AzureServiceBus\RSMassTransit.Client.AzureServiceBus.csproj" />
+    <ProjectReference Include="..\RSMassTransit.Client.AzureServiceBus\RSMassTransit.Client.AzureServiceBus.csproj" Condition="'$(TargetFramework)' == 'net48'" />
+    <ProjectReference Include="..\RSMassTransit.Client.AzureServiceBus.Core\RSMassTransit.Client.AzureServiceBus.Core.csproj" Condition="'$(TargetFramework)' == 'netcoreapp3.1'" />
     <ProjectReference Include="..\RSMassTransit.Client.RabbitMQ\RSMassTransit.Client.RabbitMQ.csproj" />
     <ProjectReference Include="..\RSMassTransit.Client\RSMassTransit.Client.csproj" />
   </ItemGroup>

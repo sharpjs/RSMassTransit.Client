@@ -13,6 +13,7 @@ Most lines should begin with one of these words:
 - Add package `RSMassTransit.Client.AzureServiceBus.Core`, which uses the newer
   [`Microsoft.Azure.ServiceBus`](https://www.nuget.org/packages/Microsoft.Azure.ServiceBus/)
   package internally.
+- Change test targets to .NET Framework 4.8 and .NET Core 3.1
 
 ## [0.0.1](https://github.com/sharpjs/RSMassTransit.Client/compare/v0.0.0...v0.0.1)
 - Update MassTransit to 5.5.1
