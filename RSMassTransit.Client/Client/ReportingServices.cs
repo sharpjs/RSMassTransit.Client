@@ -29,6 +29,8 @@ using RSMassTransit.Messages;
 using static System.Reflection.BindingFlags;
 using static System.StringComparison;
 
+#pragma warning disable CS0618 // Type or member is obsolete
+
 namespace RSMassTransit.Client
 {
     /// <summary>
