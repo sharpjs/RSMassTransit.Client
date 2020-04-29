@@ -21,7 +21,7 @@
 
   <PropertyGroup>
     <Description>RabbitMQ client implementation for RSMassTransit, a MassTransit message bus interface for SQL Server Reporting Services.</Description>
-    <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
@@ -29,7 +29,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MassTransit.RabbitMQ" Version="[5.5.6,6.0.0)" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="[6.2.5,7.0.0)" />
     <!-- Versions for project refs that become package refs in the NuGet package.
          See: https://github.com/dotnet/sdk/issues/1151#issuecomment-297265205 -->
     <PackageReference Include="RSMassTransit.Client" Version="[$(PackageVersion)]" Condition="$(GeneratePackageOnBuild)" />

@@ -45,8 +45,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RSMassTransit.Client.AzureServiceBus\RSMassTransit.Client.AzureServiceBus.csproj" Condition="'$(TargetFramework)' == 'net48'" />
-    <ProjectReference Include="..\RSMassTransit.Client.AzureServiceBus.Core\RSMassTransit.Client.AzureServiceBus.Core.csproj" Condition="'$(TargetFramework)' == 'netcoreapp3.1'" />
+    <ProjectReference Include="..\RSMassTransit.Client.AzureServiceBus.Core\RSMassTransit.Client.AzureServiceBus.Core.csproj" />
     <ProjectReference Include="..\RSMassTransit.Client.RabbitMQ\RSMassTransit.Client.RabbitMQ.csproj" />
     <ProjectReference Include="..\RSMassTransit.Client\RSMassTransit.Client.csproj" />
   </ItemGroup>
