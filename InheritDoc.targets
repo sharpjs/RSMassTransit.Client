@@ -16,19 +16,15 @@
     OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
   -->
 
-  <ItemGroup Condition="!$(TargetFramework.StartsWith('netstandard'))">
-    <PackageReference Include="InheritDoc" Version="[2.2.1]">
+  <ItemGroup>
+    <PackageReference Include="InheritDoc" Version="[2.3.0]" GeneratePathProperty="true">
       <ExcludeAssets>all</ExcludeAssets>
+      <NoWarn>NU1701</NoWarn>
     </PackageReference>
   </ItemGroup>
 
-  <Target
-    Name="InheritDoc"
-    AfterTargets="CopyFilesToOutputDirectory"
-    Condition="'$(_DocumentationFileProduced)'=='true'">
-    <Exec
-      Command="$(NuGetPackageRoot)inheritdoc\2.0.2\tools\InheritDoc.exe -o"
-      WorkingDirectory="$(OutDir)" />
+  <Target Name="InheritDoc" AfterTargets="CopyFilesToOutputDirectory" Condition="'$(_DocumentationFileProduced)'=='true'">
+    <Exec Command="$(PkgInheritDoc)\tools\InheritDoc.exe -o" WorkingDirectory="$(OutDir)" />
   </Target>
 
 </Project>
