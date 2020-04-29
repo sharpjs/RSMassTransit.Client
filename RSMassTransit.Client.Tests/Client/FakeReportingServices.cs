@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright (C) 2019 Jeffrey Sharp
+    Copyright (C) 2020 Jeffrey Sharp
 
     Permission to use, copy, modify, and distribute this software for any
     purpose with or without fee is hereby granted, provided that the above
@@ -20,6 +20,8 @@ using System.Net;
 using System.Threading;
 using MassTransit;
 using Moq;
+
+#pragma warning disable CS0618 // Type or member is obsolete
 
 namespace RSMassTransit.Client
 {
