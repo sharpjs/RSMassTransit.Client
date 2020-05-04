@@ -16,16 +16,9 @@
     OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
   -->
 
-  <Import Project="..\General.props" />
-  <Import Project="..\Local.props" Condition="Exists('..\Local.props')" />
-
   <PropertyGroup>
     <Description>RabbitMQ client implementation for RSMassTransit, a MassTransit message bus interface for SQL Server Reporting Services.</Description>
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
@@ -38,7 +31,5 @@
   <ItemGroup>
     <ProjectReference Include="..\RSMassTransit.Client\RSMassTransit.Client.csproj" />
   </ItemGroup>
-
-  <Import Project="..\InheritDoc.targets" />
 
 </Project>

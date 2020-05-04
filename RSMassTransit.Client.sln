@@ -5,16 +5,17 @@ VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".root", ".root", "{CAAC4622-F900-4299-9B7B-5C53A2EB8670}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		CHANGES.md = CHANGES.md
-		General.props = General.props
+		Coverlet.runsettings = Coverlet.runsettings
+		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
 		GlobalAssemblyInfo.cs = GlobalAssemblyInfo.cs
-		InheritDoc.targets = InheritDoc.targets
 		LICENSE.txt = LICENSE.txt
 		Make.ps1 = Make.ps1
 		README.md = README.md
-		Set-Version.ps1 = Set-Version.ps1
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSMassTransit.Client", "RSMassTransit.Client\RSMassTransit.Client.csproj", "{F0A95319-E362-44C3-BBA9-2C354CD2359C}"
@@ -33,6 +34,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSMassTransit.Client.Tests"
 	ProjectSection(ProjectDependencies) = postProject
 		{F0A95319-E362-44C3-BBA9-2C354CD2359C} = {F0A95319-E362-44C3-BBA9-2C354CD2359C}
 		{89D2B946-010E-4089-B5EE-421CAF6B40C9} = {89D2B946-010E-4089-B5EE-421CAF6B40C9}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".config", ".config", "{F8EEE54D-9C43-402C-B45C-FCD4360170DA}"
+	ProjectSection(SolutionItems) = preProject
+		.config\dotnet-tools.json = .config\dotnet-tools.json
 	EndProjectSection
 EndProject
 Global
@@ -60,6 +66,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F8EEE54D-9C43-402C-B45C-FCD4360170DA} = {CAAC4622-F900-4299-9B7B-5C53A2EB8670}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CA55631C-5C76-401C-8809-C26E140A72BB}
